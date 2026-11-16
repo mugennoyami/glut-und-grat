@@ -1,0 +1,33 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# tests
+/coverage
+/playwright-report
+/test-results
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+
+# env files (niemals Geheimnisse committen; .env.example ist erlaubt)
+.env
+.env.*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# lokale Screenshots / Scratch
+/.scratch

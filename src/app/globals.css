@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+/* ───────────── Designsystem „Glut & Grat“ ─────────────
+   Warmes Schwarz und Anthrazit, gebrochenes Weiß, sparsame Kupfer- und Glutakzente.
+   Kontraste (WCAG): bone auf coal ≈ 15:1, fog auf coal ≈ 7:1, copper auf coal ≈ 6:1,
+   ink auf bone ≈ 15:1, ink-soft auf bone ≈ 7:1, copper-deep auf bone ≈ 5:1. */
+@theme {
+  --color-coal: #110f0e;
+  --color-forge: #191614;
+  --color-anthracite: #24201e;
+  --color-ash: #38322f;
+  --color-smoke: #5b534d;
+  --color-fog: #aba297;
+  --color-bone: #efe9de;
+  --color-paper: #e3dacb;
+  --color-ink: #1a1613;
+  --color-ink-soft: #4d443c;
+  --color-copper: #c6844c;
+  --color-copper-deep: #8c5025;
+  --color-ember: #ee6b2d;
+  --color-ember-soft: #f48f55;
+
+  --font-display: "Fraunces Variable", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-forge: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root {
+  --focus: var(--color-ember-soft);
+  --noise-soft: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --noise: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-coal);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* dezentes Korn über der ganzen Seite */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background-image: var(--noise);
+  background-size: 220px 220px;
+  opacity: 0.045;
+}
+
+::selection {
+  background: var(--color-copper);
+  color: var(--color-coal);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* helle Abschnitte */
+.on-bone {
+  --focus: var(--color-copper-deep);
+  background: var(--color-bone);
+  color: var(--color-ink);
+}
+.on-bone ::selection {
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4.5vw, 3rem);
+}
+
+@utility wrap-narrow {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4.5vw, 3rem);
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 620;
+  letter-spacing: -0.022em;
+  line-height: 1;
+  text-wrap: balance;
+  font-optical-sizing: auto;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+@utility prose-copy {
+  max-width: 38rem;
+  text-wrap: pretty;
+}
+
+/* gehämmerte Metallfläche (sehr dezent) */
+@utility surface-hammered {
+  background-image:
+    radial-gradient(ellipse 60% 40% at 18% 22%, rgb(255 255 255 / 0.035), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 78% 64%, rgb(255 255 255 / 0.03), transparent 70%),
+    radial-gradient(ellipse 30% 22% at 52% 88%, rgb(0 0 0 / 0.28), transparent 70%),
+    var(--noise-soft);
+  background-size: auto, auto, auto, 220px 220px;
+}
+
+/* ───────────── Bewegung (nur ohne reduzierte Animation) ───────────── */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    transition:
+      opacity 0.9s var(--ease-forge),
+      transform 0.9s var(--ease-forge);
+  }
+  [data-reveal="hidden"] {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  @keyframes ember-rise {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.95;
+    }
+    100% {
+      transform: translate3d(var(--dx), var(--rise), 0) scale(0.25);
+      opacity: 0;
+    }
+  }
+  .ember {
+    animation: ember-rise var(--dur) cubic-bezier(0.3, 0.1, 0.5, 1) var(--delay) infinite;
+  }
+
+  @keyframes glow-breathe {
+    0%,
+    100% {
+      opacity: 0.78;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+  .glow-breathe {
+    animation: glow-breathe 7s ease-in-out infinite;
+  }
+
+  @keyframes knife-glint {
+    0%,
+    62% {
+      transform: translateX(0) skewX(-24deg);
+      opacity: 0;
+    }
+    68% {
+      opacity: 1;
+    }
+    92% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(var(--glint-travel)) skewX(-24deg);
+      opacity: 0;
+    }
+  }
+  .knife-glint {
+    animation: knife-glint 9s ease-in-out 1.2s infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ember {
+    display: none;
+  }
+  .knife-glint {
+    display: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Dialoge (Warenkorb, Menü) */
+dialog {
+  color: inherit;
+}
+dialog::backdrop {
+  background: rgb(8 6 5 / 0.72);
+  backdrop-filter: blur(3px);
+}
+
+/* Details/FAQ: natives Zeichen ausblenden */
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Zahleneingaben ohne Spinner (eigene Stepper) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Seitliche Dialoge */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes dialog-in-right {
+    from {
+      transform: translateX(2.5rem);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes dialog-in-left {
+    from {
+      transform: translateX(-2.5rem);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  .side-dialog[open].side-right > div {
+    animation: dialog-in-right 0.32s var(--ease-forge);
+  }
+  .side-dialog[open].side-left > div {
+    animation: dialog-in-left 0.32s var(--ease-forge);
+  }
+}
