@@ -19,9 +19,19 @@ export default function WorkshopPage() {
         <p className="prose-copy mt-6 text-lg text-bone/90">{workshop.lead}</p>
       </section>
 
-      <section className="wrap grid gap-5 pb-24 sm:grid-cols-12" aria-label="Fotos">
-        <PhotoSlot label="Platz für Werkstattfotos" aspect="3/2" className="sm:col-span-7" />
-        <PhotoSlot label="Platz für ein Detailfoto" aspect="4/5" className="sm:col-span-5 sm:mt-14" />
+      <section className="wrap grid gap-10 pb-24 lg:grid-cols-12 lg:gap-14" aria-labelledby="person-title">
+        <div className="lg:col-span-5">
+          <p className="eyebrow text-copper">{workshop.person.title}</p>
+          <h2 id="person-title" className="display mt-4 text-5xl sm:text-6xl">
+            {workshop.person.name}
+          </h2>
+          <p className="prose-copy mt-6 text-lg text-bone/90">{workshop.person.text}</p>
+          <PhotoSlot label="Platz für ein Porträt" aspect="4/5" className="mt-8 max-w-xs" />
+        </div>
+        <div className="grid content-start gap-5 sm:grid-cols-12 lg:col-span-7">
+          <PhotoSlot label="Platz für Werkstattfotos" aspect="3/2" className="sm:col-span-12" />
+          <PhotoSlot label="Platz für ein Detailfoto" aspect="3/2" className="sm:col-span-7" />
+        </div>
       </section>
 
       <section className="border-y border-bone/10 bg-forge" aria-labelledby="stations-title">
@@ -59,7 +69,7 @@ export default function WorkshopPage() {
           <InfoIcon size={24} className="mt-0.5 shrink-0 text-copper" />
           <div>
             <p className="font-semibold">Noch offen</p>
-            <p className="mt-1 max-w-2xl text-bone/90">{workshop.open}</p>
+            <p className="mt-1 max-w-2xl text-bone/90">{workshop.person.open}</p>
           </div>
         </div>
         <div className="mt-10 flex flex-wrap gap-3">

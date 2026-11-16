@@ -11,6 +11,11 @@ export function WorkshopSection() {
       <Reveal className="grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-6">
           <SectionHead id="workshop-title" eyebrow={workshop.eyebrow} title={workshop.title} lead={workshop.lead} />
+          <div className="mt-9 max-w-lg border-l-2 border-copper pl-5">
+            <p className="eyebrow text-copper">{workshop.person.title}</p>
+            <p className="font-display mt-1 text-4xl font-semibold">{workshop.person.name}</p>
+            <p className="mt-3 text-bone/90">{workshop.person.text}</p>
+          </div>
           <Link href="/werkstatt" className="mt-8 inline-flex min-h-11 items-center gap-2 font-semibold underline underline-offset-[6px] hover:text-copper">
             Mehr zur Werkstatt <ArrowRightIcon size={18} />
           </Link>

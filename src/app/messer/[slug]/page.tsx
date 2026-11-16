@@ -7,6 +7,9 @@ import { getProduct, products } from "@/content/products";
 
 type Params = { slug: string };
 
+/** Nur die Produkte aus dem Katalog; alles andere ist 404 (nötig für den statischen Export). */
+export const dynamicParams = false;
+
 export function generateStaticParams(): Params[] {
   return products.map((p) => ({ slug: p.slug }));
 }

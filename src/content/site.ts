@@ -8,7 +8,9 @@ export const site = {
   name: "Glut & Grat",
   claim: "Schmiedekunst. Schärfe. Charakter.",
   description:
-    "Glut & Grat ist eine kleine Schmiede: handgeschmiedete Messer, Schärfservice sowie individuelle Griffe und Scheiden.",
+    "Glut & Grat ist die kleine Schmiede von Meisterschmied David: handgeschmiedete Messer, Schärfservice sowie individuelle Griffe und Scheiden.",
+  /** Betreiber der Werkstatt (eine Person). Nachname und weitere Angaben sind noch offen. */
+  operator: { title: "Meisterschmied", name: "David" },
   url: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000",
 
   /**
@@ -31,6 +33,7 @@ export const site = {
     email: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || null,
     phone: null as string | null,
     /** Offene Angaben für Impressum/Kontakt */
+    /** Vollständiger Name für das Impressum – bisher ist nur der Vorname bekannt */
     owner: null as string | null,
     street: null as string | null,
     city: null as string | null,

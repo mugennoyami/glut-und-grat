@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { STATIC_EXPORT } from "@/lib/runtime";
 
 export type SubmitStatus =
   | { state: "idle" }
@@ -12,8 +13,10 @@ export type SubmitStatus =
 
 /** Fragt ab, ob Anfragen zugestellt werden können (null = noch unbekannt). */
 export function useDeliveryConfigured(): boolean | null {
-  const [configured, setConfigured] = useState<boolean | null>(null);
+  // Statischer Export: Es gibt keinen Server, also auch keinen Zustellweg.
+  const [configured, setConfigured] = useState<boolean | null>(STATIC_EXPORT ? false : null);
   useEffect(() => {
+    if (STATIC_EXPORT) return;
     let alive = true;
     fetch("/api/inquiries", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
@@ -37,8 +40,13 @@ export function useInquirySubmit() {
   const [serverErrors, setServerErrors] = useState<Record<string, string>>({});
 
   const submit = useCallback(async (payload: unknown) => {
-    setStatus({ state: "sending" });
     setServerErrors({});
+    if (STATIC_EXPORT) {
+      // Ohne Server wird nichts gesendet – und es wird auch nichts als gesendet ausgegeben.
+      setStatus({ state: "unavailable" });
+      return;
+    }
+    setStatus({ state: "sending" });
     try {
       const response = await fetch("/api/inquiries", {
         method: "POST",

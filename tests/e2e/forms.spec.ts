@@ -1,4 +1,4 @@
-import { expect, test } from "./fixtures";
+import { expect, test, tick } from "./fixtures";
 
 test.describe("Schärfformular", () => {
   test("zeigt bei fehlenden Angaben Fehler mit Labels, Zusammenfassung und aria-invalid", async ({ page }) => {
@@ -42,7 +42,7 @@ test.describe("Schärfformular", () => {
     await page.getByLabel(/Besondere Wünsche/).fill("Einhändig geführt, Rost an der Spitze.");
     await page.getByLabel(/^Name/).fill("Erika Beispiel");
     await page.getByLabel(/^E-Mail/).fill("erika@beispiel.de");
-    await page.getByLabel(/Ich bin damit einverstanden/).check({ force: true });
+    await tick(page.getByLabel(/Ich bin damit einverstanden/));
 
     const requests: { status: number }[] = [];
     page.on("response", (r) => {
@@ -90,7 +90,7 @@ test.describe("Maßarbeit-Formular", () => {
     await page.getByLabel(/Beschreibung/).fill("Ein dunkler Griff mit schmalem Kupferring, dazu eine schlichte Scheide.");
     await page.getByLabel(/^Name/).fill("Erika Beispiel");
     await page.getByLabel(/^E-Mail/).fill("erika@beispiel.de");
-    await page.getByLabel(/Ich bin damit einverstanden/).check({ force: true });
+    await tick(page.getByLabel(/Ich bin damit einverstanden/));
     await page.getByRole("button", { name: "Projekt anfragen" }).click();
 
     await expect(page.getByRole("alert").filter({ hasText: "Nicht gesendet." })).toBeVisible();
@@ -108,7 +108,7 @@ test.describe("Kontaktformular", () => {
     await page.getByLabel(/^Nachricht/).fill("Eine Frage zum Schärfservice bitte.");
     await page.getByLabel(/^Name/).fill("Erika Beispiel");
     await page.getByLabel(/^E-Mail/).fill("erika@beispiel.de");
-    await page.getByLabel(/Ich bin damit einverstanden/).check({ force: true });
+    await tick(page.getByLabel(/Ich bin damit einverstanden/));
     await page.getByRole("button", { name: "Nachricht absenden" }).click();
     await expect(page.getByRole("alert").filter({ hasText: "Nicht gesendet." })).toBeVisible();
   });

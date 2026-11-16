@@ -10,6 +10,9 @@ import { shopConfig } from "@/content/shop";
 import type { QuoteDto } from "@/lib/commerce/request";
 import { emptyCheckoutValues, validateCheckout, type CheckoutValues as Values } from "@/lib/commerce/checkout-form";
 import { formatPrice } from "@/lib/money";
+import { priceCart } from "@/lib/cart/pricing";
+import { toQuoteDto } from "@/lib/commerce/request";
+import { STATIC_EXPORT } from "@/lib/runtime";
 import { useCart } from "./CartProvider";
 import { CartTotals } from "./CartTotals";
 
@@ -30,17 +33,25 @@ export function CheckoutView() {
   const [values, setValues] = useState<Values>(emptyCheckoutValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [focusKey, setFocusKey] = useState(0);
-  const [quote, setQuote] = useState<QuoteState>({ state: "loading" });
+  const [serverQuote, setServerQuote] = useState<QuoteState>({ state: "loading" });
   const [result, setResult] = useState<Result>({ state: "idle" });
 
   const linesKey = useMemo(() => JSON.stringify(lines), [lines]);
 
+  // Statische Demo ohne Server: dieselbe Preislogik, im Browser berechnet (abgeleitet, kein Effekt nötig).
+  const staticQuote = useMemo<QuoteState>(
+    () => (STATIC_EXPORT && lines.length > 0 ? { state: "ok", quote: toQuoteDto(priceCart(lines)) } : { state: "loading" }),
+    [lines],
+  );
+  const quote: QuoteState = STATIC_EXPORT ? staticQuote : serverQuote;
+
   useEffect(() => {
+    if (STATIC_EXPORT) return;
     if (!ready) return;
     if (lines.length === 0) return;
     const controller = new AbortController();
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setQuote({ state: "loading" });
+    setServerQuote({ state: "loading" });
     fetch("/api/checkout/quote", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -49,11 +60,11 @@ export function CheckoutView() {
     })
       .then((r) => r.json())
       .then((body: { ok?: boolean; quote?: QuoteDto }) => {
-        if (body.ok && body.quote) setQuote({ state: "ok", quote: body.quote });
-        else setQuote({ state: "error" });
+        if (body.ok && body.quote) setServerQuote({ state: "ok", quote: body.quote });
+        else setServerQuote({ state: "error" });
       })
       .catch((err) => {
-        if (err?.name !== "AbortError") setQuote({ state: "error" });
+        if (err?.name !== "AbortError") setServerQuote({ state: "error" });
       });
     return () => controller.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,6 +147,20 @@ export function CheckoutView() {
       return;
     }
     setErrors({});
+    if (STATIC_EXPORT) {
+      const local = toQuoteDto(priceCart(lines));
+      if (local.lines.length === 0 || local.issues.some((i) => i.code !== "quantity_reduced")) {
+        setResult({ state: "error", message: "Der Warenkorb enthält Positionen, die nicht (mehr) bestellbar sind. Bitte prüfe ihn." });
+        return;
+      }
+      setValues(emptyCheckoutValues);
+      setResult({
+        state: "done",
+        message: "Statische Demo ohne Server: Es wurde nichts übermittelt, keine Bestellung angelegt und keine Zahlung ausgelöst.",
+        quote: local,
+      });
+      return;
+    }
     setResult({ state: "sending" });
     try {
       // Es werden ausschließlich Positionen gesendet – keine Preise, keine persönlichen Daten.
@@ -267,7 +292,7 @@ export function CheckoutView() {
             </h2>
             {quote.state === "loading" ? (
               <p className="mt-4 text-fog" role="status">
-                Warenkorb wird serverseitig geprüft …
+                {STATIC_EXPORT ? "Warenkorb wird geprüft …" : "Warenkorb wird serverseitig geprüft …"}
               </p>
             ) : null}
             {quote.state === "error" ? (
@@ -294,7 +319,11 @@ export function CheckoutView() {
                   <p className="mt-3 text-sm text-copper">{serverSummary.issues.map((i) => i.message).join(" ")}</p>
                 ) : null}
                 <CartTotals summary={{ ...display, freeShippingRemainingCents: null }} className="mt-5" />
-                <p className="mt-3 text-xs text-fog">Summen vom Server aus den Katalogdaten berechnet.</p>
+                <p className="mt-3 text-xs text-fog">
+                  {STATIC_EXPORT
+                    ? "Summen im Browser aus den Katalogdaten berechnet (statische Demo ohne Server)."
+                    : "Summen vom Server aus den Katalogdaten berechnet."}
+                </p>
               </>
             ) : null}
             <Link href="/warenkorb" className="mt-5 inline-flex min-h-11 items-center text-sm underline underline-offset-4 hover:text-copper">

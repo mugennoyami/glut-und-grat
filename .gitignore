@@ -9,6 +9,7 @@
 
 # production
 /build
+/.pages-build
 
 # tests
 /coverage

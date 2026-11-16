@@ -1,11 +1,11 @@
 import type { Page } from "@playwright/test";
-import { expect, test } from "./fixtures";
+import { expect, test, tick } from "./fixtures";
 
 const nbsp = (s: string | null) => (s ?? "").replace(/\u00a0/g, " ").trim();
 
 async function addFunke(page: Page, opts: { holz?: RegExp } = {}) {
   await page.goto("/messer/funke");
-  if (opts.holz) await page.getByRole("radio", { name: opts.holz }).check({ force: true });
+  if (opts.holz) await tick(page.getByRole("radio", { name: opts.holz }));
   await page.getByTestId("add-to-cart").click();
 }
 
@@ -27,9 +27,9 @@ test.describe("Produktseite", () => {
     await page.goto("/messer/esse");
     const price = page.getByTestId("product-price");
     await expect(price).toHaveText(/168,00/);
-    await page.getByRole("radio", { name: /Räuchereiche/ }).check({ force: true });
+    await tick(page.getByRole("radio", { name: /Räuchereiche/ }));
     await expect(price).toHaveText(/178,00/);
-    await page.getByRole("radio", { name: /Klingenschutz aus Leder/ }).check({ force: true });
+    await tick(page.getByRole("radio", { name: /Klingenschutz aus Leder/ }));
     await expect(price).toHaveText(/202,00/);
     await expect(page.getByRole("radio", { name: /Esche/ })).toBeDisabled();
   });
@@ -154,7 +154,7 @@ test.describe("Demo-Kasse", () => {
     await page.getByLabel(/^Straße/).fill("Musterweg 1");
     await page.getByLabel(/^PLZ/).fill("12345");
     await page.getByLabel(/^Ort/).fill("Musterstadt");
-    await page.getByLabel(/Ich weiß, dass dies ein Demo-Durchlauf ist/).check({ force: true });
+    await tick(page.getByLabel(/Ich weiß, dass dies ein Demo-Durchlauf ist/));
     await page.getByTestId("demo-submit").click();
 
     const done = page.getByTestId("demo-done");

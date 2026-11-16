@@ -1,4 +1,4 @@
-import { expect, test as base } from "@playwright/test";
+import { expect, test as base, type Locator } from "@playwright/test";
 
 /**
  * Wartet nach jeder Navigation, bis React die Seite übernommen hat (`data-hydrated`).
@@ -28,3 +28,13 @@ export const test = base.extend({
 });
 
 export { expect };
+
+/**
+ * Setzt ein (visuell ausgeblendetes) Kontrollkästchen oder Optionsfeld per Tastatur (Leertaste).
+ * Unabhängig von Koordinaten und überdeckenden Elementen wie dem mitscrollenden Header – und prüft nebenbei die Tastaturbedienung.
+ */
+export async function tick(control: Locator): Promise<void> {
+  await control.focus();
+  await control.press("Space");
+  await expect(control).toBeChecked();
+}

@@ -63,6 +63,16 @@ test.describe("Startseite", () => {
     await expect(page.getByText("kein Rechtstext")).toBeVisible();
   });
 
+  test("Werkstatt nennt Meisterschmied David als Betreiber, ohne erfundene Biografie", async ({ page }) => {
+    await page.goto("/werkstatt");
+    await expect(page.getByRole("heading", { level: 2, name: "David" })).toBeVisible();
+    await expect(page.getByText("Meisterschmied", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(/betreibe Glut & Grat allein/)).toBeVisible();
+    await expect(page.getByText(/bewusst keine erfundene Biografie/)).toBeVisible();
+    await page.goto("/");
+    await expect(page.getByRole("contentinfo")).toContainText("Meisterschmied David");
+  });
+
   test("FAQ lässt sich per Tastatur öffnen", async ({ page }) => {
     await page.goto("/");
     const first = page.locator("#faq summary").first();

@@ -2,7 +2,7 @@
 
 **Schmiedekunst. Schärfe. Charakter.**
 
-Website mit integriertem Demo-Shop für eine kleine handwerkliche Schmiede. Stand: 16.11.2026 – **erste lauffähige Version, noch nicht für den Livebetrieb freigegeben.**
+Website mit integriertem Demo-Shop für die kleine Schmiede von **Meisterschmied David** (die Werkstatt wird von einer Person betrieben). Stand: 16.11.2026 – **erste lauffähige Version als Demo-Vorschau, noch nicht für den Livebetrieb freigegeben.**
 
 Der Name ist ein vorläufiger Arbeitstitel. Marken- und Domainverfügbarkeit wurden noch nicht geprüft.
 
@@ -41,6 +41,11 @@ npm test             # Unit-Tests (Vitest)
 npm run check        # alles oben + Build
 ```
 
+```bash
+npm run build:pages      # statischer Export für GitHub Pages nach ./out
+npm run preview:pages    # Export unter http://localhost:4000/glut-und-grat/ ansehen
+```
+
 E2E-Tests (Playwright, Desktop und Mobil) laufen gegen den Produktions-Build:
 
 ```bash
@@ -49,6 +54,9 @@ npm run test:e2e                    # baut, startet auf Port 3100 und testet
 
 # gegen eine bereits laufende Instanz / mit vorhandenem Chromium:
 PW_BASE_URL=http://localhost:3000 PW_CHROMIUM_PATH=/pfad/zu/chromium npm run test:e2e
+
+# nur den statischen GitHub-Pages-Export testen (nach build:pages + preview:pages):
+PW_ONLY_STATIC=1 PW_STATIC_BASE_URL=http://localhost:4000/glut-und-grat/ npm run test:e2e
 ```
 
 Ohne weitere Konfiguration läuft alles vollständig als Demo – es sind keine Zugangsdaten nötig.
@@ -56,6 +64,9 @@ Ohne weitere Konfiguration läuft alles vollständig als Demo – es sind keine 
 ## Projektstruktur
 
 ```
+.github/workflows/pages.yml   Veröffentlichung über GitHub Pages
+scripts/                  build-pages.mjs (statischer Export), preview-pages.mjs (lokale Vorschau)
+tsconfig.pages.json       TypeScript-Konfiguration nur für den Pages-Build (ohne Tests/API)
 src/
   app/                    Routen (Next.js App Router)
     page.tsx                Startseite
@@ -120,6 +131,7 @@ Solange nichts anderes konfiguriert ist:
 - **Foto-Upload ist nicht vorhanden** und wird deshalb nicht angeboten.
 - **Rechtsseiten sind Platzhalter** und benennen nur, was fehlt.
 - **Suchmaschinen sind ausgesperrt** (`robots.txt` mit `Disallow: /`, `noindex`), bis `SITE_INDEXABLE=true` gesetzt ist.
+- **Auf GitHub Pages läuft die Seite als statischer Export ohne Server** (siehe unten): Formulare melden dort immer „Nicht gesendet“, die Demo-Kasse rechnet im Browser (mit derselben Preislogik) und benennt das offen.
 - Der Warenkorb liegt im `localStorage` des Browsers (Schlüssel `glutgrat.cart.v1`; nur Produkt, Auswahl, Menge). Er überlebt Seitenwechsel und Browserneustart. Blockiert der Browser das Speichern, bleibt er bis zum Neuladen im Arbeitsspeicher und die Seite weist darauf hin.
 
 ## Konfiguration
@@ -158,10 +170,29 @@ Grundsätze, die bereits umgesetzt sind:
 
 Noch zu bauen, sobald ein Anbieter feststeht: Bestellung serverseitig anlegen (mit Katalogpreisen zum Zeitpunkt der Bestellung), Zahlungsergebnis ausschließlich über den **verifizierten Webhook** verarbeiten (Anbieter-eigene Signaturprüfung statt HMAC-Platzhalter, Betrag gegen gespeicherte Bestellung prüfen, idempotent), Statusseite für Kundschaft, Bestellbenachrichtigung.
 
+## Veröffentlichung über GitHub Pages
+
+Die Seite wird als **statischer Export** veröffentlicht (`npm run build:pages` → `./out`), weil GitHub Pages nur Dateien ausliefert. Der Workflow `.github/workflows/pages.yml` prüft (Typen, Lint, Unit-Tests), baut den Export und veröffentlicht ihn bei jedem Push auf `main` oder per Hand (Actions → „GitHub Pages“ → Run workflow).
+
+Adresse (Projektseite): `https://mugennoyami.github.io/glut-und-grat/`
+
+**Einmalig im Repository einzurichten** (das ist nicht automatisierbar):
+1. **Sichtbarkeit/Tarif:** GitHub Pages ist für *private* Repositories nur mit einem bezahlten GitHub-Tarif (Pro, Team, Enterprise) verfügbar; auf dem kostenlosen Tarif muss das Repository öffentlich sein. Die veröffentlichte Seite ist in beiden Fällen **öffentlich im Internet erreichbar**.
+2. **Settings → Pages → Build and deployment → Source: „GitHub Actions“** wählen.
+3. Danach läuft der Workflow beim nächsten Push auf `main`; die Adresse steht im Lauf unter „deploy“.
+
+Was der Export anders macht:
+- Alle Adressen liegen unter dem Basis-Pfad `/glut-und-grat/` (bei eigener Domain: `PAGES_BASE_PATH=""` setzen).
+- Es gibt **keine API**: `src/app/api` wird nur für diesen Build beiseitegelegt und danach wiederhergestellt. Formulare senden nichts und sagen das offen („Nicht gesendet“, mit „Anfrage als Text kopieren“). Die Kasse rechnet im Browser und weist darauf hin; Preise stammen weiterhin ausschließlich aus dem Katalog.
+- Die Sicherheits-Header aus `next.config.ts` entfallen (Pages erlaubt keine eigenen Header). Für den Livebetrieb deshalb Hosting mit Server oder Edge-Konfiguration wählen.
+- Die Seite bleibt **noindex** und `robots.txt` sperrt Suchmaschinen, bis `SITE_INDEXABLE=true` gesetzt und neu gebaut wird.
+
+Für den echten Shop (Zahlung, Bestellungen, Formularzustellung) ist GitHub Pages nicht ausreichend; dafür braucht es Hosting mit Server-Funktionen (z. B. Vercel, Netlify, eigener Node-Server) – der normale `npm run build` / `npm start` ist darauf ausgelegt.
+
 ## Qualität
 
 - **Unit-Tests (63):** Preis-/Warenkorblogik inkl. Versand und Grenzfälle, Bereinigung manipulierter Speicherstände, Formular-Schemas, Kassenvalidierung, alle API-Routen (ohne Backend, mit Webhook-Mock, Honeypot, Signaturen), Messergeometrie.
-- **E2E-Tests (Desktop Chrome + Pixel 7):** Variantenwahl und Preise, Hinzufügen/Mengen/Entfernen mit Summen, Persistenz über Neuladen und neue Seiten, Kasse als Demo ohne Datenabfluss, Formularfehler mit Fokus und `aria-invalid`, ehrliche „Nicht gesendet“-Rückmeldung, kein horizontaler Überlauf auf allen Seiten, reduzierte Bewegung, Tastatur (Skip-Link, FAQ, Esc).
+- **E2E-Tests (Desktop Chrome + Pixel 7; zusätzlich 8 Tests für den statischen Pages-Export):** Variantenwahl und Preise, Hinzufügen/Mengen/Entfernen mit Summen, Persistenz über Neuladen und neue Seiten, Kasse als Demo ohne Datenabfluss, Formularfehler mit Fokus und `aria-invalid`, ehrliche „Nicht gesendet“-Rückmeldung, kein horizontaler Überlauf auf allen Seiten, reduzierte Bewegung, Tastatur (Skip-Link, FAQ, Esc).
 - **Barrierefreiheit:** automatische axe-core-Prüfung (WCAG 2.1 A/AA, inkl. Kontraste) aller Hauptseiten und der Warenkorb-Schublade ohne Befund; sichtbare Fokuszustände; Formularlabels, Fehlerzusammenfassung mit Sprunglinks; native `<dialog>`-Elemente mit Fokusfalle und Esc. **Eine manuelle Prüfung mit Screenreader (VoiceOver/NVDA) steht noch aus.**
 - **Mobil:** Zielflächen ≥ 44 px, feste Warenkorb-/Kassenleisten in Daumenreichweite, einspaltige Varianten- und Formulare.
 
@@ -199,11 +230,12 @@ Nichts davon ist erledigt; bis dahin ist dies **kein produktiver Shop**.
 | Zahlungsanbieter, Bestellspeicher, Webhook-Verarbeitung | nicht angebunden |
 | Anfrage-Zustellung | nicht angebunden (Webhook-Adapter vorbereitet) |
 | Foto-Upload für Anfragen | nicht vorhanden |
-| Werkstattvorstellung (Person, Fotos) | offen |
-| Hosting, Domain | offen |
+| Werkstattvorstellung | Betreiber bekannt: Meisterschmied David (Einpersonen-Werkstatt). Nachname, Werdegang, Fotos und Porträt offen |
+| Hosting, Domain | Demo über GitHub Pages (siehe oben); Live-Hosting und Domain offen |
 
 ## Hinweise
 
+- **Stimme der Texte:** Die Seite spricht in der Ich-Form von David („Ich prüfe deine Anfrage …“) und duzt Besucher. Über David stehen nur die gesicherten Angaben auf der Seite (Vorname, Meisterschmied, betreibt die Werkstatt allein); es gibt keine erfundene Biografie. Texte stehen in `src/content/pages.ts` und sollten vor dem Livegang von David freigegeben werden.
 - Stack: Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, Zod. Schriften (Fraunces, Instrument Sans) sind über npm eingebunden und werden von der eigenen Seite ausgeliefert – keine Drittanbieter-Anfragen.
 - `AGENTS.md` wird von `next dev` erzeugt (Hinweis auf die mitgelieferte Next-Dokumentation unter `node_modules/next/dist/docs/`).
 - Projektregeln für die Weiterarbeit stehen in `CLAUDE.md`.

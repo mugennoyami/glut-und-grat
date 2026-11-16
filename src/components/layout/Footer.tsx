@@ -11,7 +11,7 @@ export function Footer() {
           <Wordmark size="lg" />
           <p className="font-display mt-5 max-w-sm text-xl italic text-fog">{site.claim}</p>
           <p className="mt-6 max-w-sm text-sm text-fog">
-            Handgeschmiedete Messer, Schärfservice sowie individuelle Griffe und Scheiden.
+            Handgeschmiedete Messer, Schärfservice sowie individuelle Griffe und Scheiden. Die Werkstatt von {site.operator.title} {site.operator.name}.
           </p>
         </div>
 
