@@ -174,12 +174,12 @@ Noch zu bauen, sobald ein Anbieter feststeht: Bestellung serverseitig anlegen (m
 
 Die Seite wird als **statischer Export** veröffentlicht (`npm run build:pages` → `./out`), weil GitHub Pages nur Dateien ausliefert. Der Workflow `.github/workflows/pages.yml` prüft (Typen, Lint, Unit-Tests), baut den Export und veröffentlicht ihn bei jedem Push auf `main` oder per Hand (Actions → „GitHub Pages“ → Run workflow).
 
-Adresse (Projektseite): `https://mugennoyami.github.io/glut-und-grat/`
+**Live (Demo-Vorschau):** <https://mugennoyami.github.io/glut-und-grat/> – Stand 16.11.2026, Workflow-Lauf erfolgreich, alle Seiten erreichbar (die 8 Export-Tests laufen auch gegen diese Adresse: `PW_ONLY_STATIC=1 PW_STATIC_BASE_URL=https://mugennoyami.github.io/glut-und-grat/ npm run test:e2e`).
 
-**Einmalig im Repository einzurichten** (das ist nicht automatisierbar):
-1. **Sichtbarkeit/Tarif:** GitHub Pages ist für *private* Repositories nur mit einem bezahlten GitHub-Tarif (Pro, Team, Enterprise) verfügbar; auf dem kostenlosen Tarif muss das Repository öffentlich sein. Die veröffentlichte Seite ist in beiden Fällen **öffentlich im Internet erreichbar**.
-2. **Settings → Pages → Build and deployment → Source: „GitHub Actions“** wählen.
-3. Danach läuft der Workflow beim nächsten Push auf `main`; die Adresse steht im Lauf unter „deploy“.
+**Voraussetzungen im Repository** (einmalig, nicht per Code änderbar):
+1. **Sichtbarkeit/Tarif:** GitHub Pages ist für *private* Repositories nur mit einem bezahlten GitHub-Tarif (Pro, Team, Enterprise) verfügbar; auf dem kostenlosen Tarif muss das Repository öffentlich sein. Das Repository ist inzwischen **öffentlich** – alles, was committet wird, ist für alle lesbar: **niemals Geheimnisse einchecken** (`.env*` ist in `.gitignore`). Die veröffentlichte Seite ist **öffentlich im Internet erreichbar**.
+2. **Settings → Pages → Build and deployment → Source: „GitHub Actions“.** Bei „Deploy from a branch“ würde GitHub stattdessen nur die README per Jekyll veröffentlichen.
+3. Der Workflow läuft bei jedem Push auf `main`; die Adresse steht im Lauf unter „deploy“.
 
 Was der Export anders macht:
 - Alle Adressen liegen unter dem Basis-Pfad `/glut-und-grat/` (bei eigener Domain: `PAGES_BASE_PATH=""` setzen).
