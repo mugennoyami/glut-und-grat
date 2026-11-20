@@ -2,6 +2,11 @@ import { expect, test } from "./fixtures";
 
 const pages = [
   "/",
+  "/ruestkammer",
+  "/ruestkammer/ruestungen",
+  "/ruestkammer/schwerter",
+  "/ruestkammer/larp",
+  "/ruestkammer/katana",
   "/messer",
   "/messer/funke",
   "/messer/esse",
@@ -38,14 +43,13 @@ test.describe("Seiten", () => {
 });
 
 test.describe("Startseite", () => {
-  test("enthält Headline, beide Handlungsoptionen und höchstens drei Messer", async ({ page }) => {
+  test("enthält Headline, neue Kollektionen und Werkstatt-Einstiege", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Aus Feuer geformt\.\s*Für deinen Alltag gemacht\./);
-    await expect(page.getByRole("link", { name: "Messer entdecken" })).toHaveAttribute("href", "/messer");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Für deine nächste\s*Legende\./);
+    await expect(page.getByRole("link", { name: "Rüstkammer entdecken" })).toHaveAttribute("href", "/ruestkammer");
     await expect(page.getByRole("link", { name: "Schärfservice anfragen" }).first()).toHaveAttribute("href", "/schaerfservice#anfrage");
-    const knives = page.locator("#messer").getByRole("link", { name: "Zum Messer" });
-    expect(await knives.count()).toBeLessThanOrEqual(3);
-    expect(await knives.count()).toBe(3);
+    await expect(page.locator("#ruestkammer").getByRole("link")).toHaveCount(4);
+    await expect(page.getByRole("link", { name: "Katana & Japan", exact: true }).first()).toHaveAttribute("href", "/ruestkammer/katana");
     await expect(page.locator("#schaerfservice")).toBeVisible();
     await expect(page.locator("#massarbeit")).toBeVisible();
     await expect(page.locator("#werkstatt")).toBeVisible();
@@ -92,11 +96,11 @@ test.describe("Startseite", () => {
     await expect(page.locator("#main")).toBeFocused();
   });
 
-  test("Navigation enthält Messer, Schärfservice, Maßarbeit, Werkstatt und Warenkorb", async ({ page, isMobile }) => {
+  test("Navigation enthält Rüstkammer, Japan, Services und Warenkorb", async ({ page, isMobile }) => {
     await page.goto("/");
     if (isMobile) await page.getByRole("button", { name: "Menü öffnen" }).click();
     const nav = isMobile ? page.getByRole("navigation", { name: "Mobile Navigation" }) : page.getByRole("navigation", { name: "Hauptnavigation" });
-    for (const name of ["Messer", "Schärfservice", "Maßarbeit", "Werkstatt"]) {
+    for (const name of ["Rüstkammer", "Katana & Japan", "Schärfservice", "Maßarbeit", "Werkstatt"]) {
       await expect(nav.getByRole("link", { name, exact: true })).toBeVisible();
     }
     if (isMobile) await page.keyboard.press("Escape");

@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { collections } from "@/content/collections";
 import { customBaseProducts, customBudgets, customMaterials, customScopes, customStyles } from "@/content/forms";
 import { inquiryToText } from "@/lib/inquiries/format";
 import { fieldErrors, inquirySchema } from "@/lib/inquiries/schemas";
@@ -46,13 +47,13 @@ function toPayload(v: Values) {
   };
 }
 
-/** Projektanfrage für individuelle Griffe und Scheiden. */
+/** Projektanfrage für Maßarbeit und die geplanten Kollektionen. */
 export function CustomWorkForm() {
   const params = useSearchParams();
   const preset = params.get("produkt") ?? "";
   const presetValid = customBaseProducts.some((p) => p.value === preset) ? preset : "";
 
-  const [values, setValues] = useState<Values>({ ...blank, baseProduct: presetValid });
+  const [values, setValues] = useState<Values>({ ...blank, baseProduct: presetValid, scope: collections.some(c => c.slug === presetValid) ? ["ausruestung"] : [] });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [focusKey, setFocusKey] = useState(0);
   const configured = useDeliveryConfigured();
@@ -137,13 +138,13 @@ export function CustomWorkForm() {
           name="description"
           required
           rows={7}
-          hint="Wofür nutzt du das Messer? Wie groß ist deine Hand? Gibt es Vorbilder oder Farben, die dir wichtig sind?"
+          hint="Für welchen Charakter, Markt oder Einsatzzweck ist dein Projekt? Geht es um Darstellung, LARP, Sammlung oder ein Schneidwerkzeug? Welche Maße, Vorbilder und Farben sind dir wichtig?"
           value={values.description}
           onChange={(e) => patch({ description: e.target.value })}
           error={shown.description}
         />
         <p id="custom-photo-note" className="text-[0.8125rem] text-fog">
-          Einen Foto-Upload gibt es hier noch nicht. Beschreib dein Messer oder deine Vorstellung in Worten; Bilder kannst du bei Rückfragen nachreichen.
+          Einen Foto-Upload gibt es hier noch nicht. Beschreib deine Ausrüstung oder deine Vorstellung in Worten; Bilder kannst du bei Rückfragen nachreichen.
         </p>
       </FormSection>
 

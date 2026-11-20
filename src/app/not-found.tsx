@@ -10,8 +10,8 @@ export default function NotFound() {
         <ButtonLink href="/" size="lg">
           Zur Startseite
         </ButtonLink>
-        <ButtonLink href="/messer" variant="secondary" size="lg">
-          Messer ansehen
+        <ButtonLink href="/ruestkammer" variant="secondary" size="lg">
+          Zur Rüstkammer
         </ButtonLink>
       </div>
     </section>

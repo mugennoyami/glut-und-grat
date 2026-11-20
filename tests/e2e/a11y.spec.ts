@@ -5,7 +5,7 @@ import { expect, test } from "./fixtures";
  * Automatische Prüfung mit axe-core (WCAG 2.x A/AA): Kontraste, Labels, ARIA, Landmarken.
  * Ersetzt keine manuelle Prüfung mit Screenreader und Tastatur, fängt aber die häufigsten Fehler ab.
  */
-const pages = ["/", "/messer", "/messer/zunder", "/schaerfservice", "/massarbeit", "/werkstatt", "/kontakt", "/warenkorb", "/kasse", "/impressum"];
+const pages = ["/", "/ruestkammer", "/ruestkammer/ruestungen", "/ruestkammer/schwerter", "/ruestkammer/larp", "/ruestkammer/katana", "/messer", "/messer/zunder", "/schaerfservice", "/massarbeit", "/werkstatt", "/kontakt", "/warenkorb", "/kasse", "/impressum"];
 
 for (const path of pages) {
   test(`axe: ${path} hat keine Verstöße (WCAG A/AA)`, async ({ page }) => {

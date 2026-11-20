@@ -1,12 +1,30 @@
 # Glut & Grat
 
-**Schmiedekunst. Schärfe. Charakter.**
+**Stahl. Leder. Geschichten.**
 
-Website mit integriertem Demo-Shop für die kleine Schmiede von **Meisterschmied David** (die Werkstatt wird von einer Person betrieben). Stand: 16.11.2026 – **erste lauffähige Version als Demo-Vorschau, noch nicht für den Livebetrieb freigegeben.**
+Website mit integriertem Demo-Shop für die kleine Schmiede von **Meisterschmied David** (die Werkstatt wird von einer Person betrieben). Stand: 20.11.2026 – **erste lauffähige Version als Demo-Vorschau, noch nicht für den Livebetrieb freigegeben.**
 
 Der Name ist ein vorläufiger Arbeitstitel. Marken- und Domainverfügbarkeit wurden noch nicht geprüft.
 
-## Angebot
+## Neue Ausrichtung: Mittelalter, Rollenspiel & Japan
+
+Die Startseite führt in eine Rüstkammer mit vier eigenständigen Kollektionen:
+
+| Bereich | Adresse | Status |
+| --- | --- | --- |
+| Übersicht & bestehender Demo-Shop | `/ruestkammer` | nutzbar |
+| Rüstungen & Gewandung | `/ruestkammer/ruestungen` | in Planung |
+| Mittelalterliche Schwerter | `/ruestkammer/schwerter` | in Planung |
+| LARP & Rollenspiel | `/ruestkammer/larp` | in Planung |
+| Katana & japanische Schwerter | `/ruestkammer/katana` | in Planung |
+
+Neue Kollektionen stehen in `src/content/collections.ts`, getrennt von `products.ts`. Sie haben **keine erfundenen Preise, Bestände oder Bestellbuttons**. Ihre Projektlinks wählen die passende Kategorie und „Ausrüstung / Sortimentswunsch“ im Anfrageformular vor. Die gemeinsame Validierung und Textausgabe unterstützen diese neuen Werte. Auf GitHub Pages wird weiterhin nichts gesendet; die ausgefüllte Anfrage lässt sich als Text kopieren.
+
+Das Design verwendet dunklen Stahl, Waldgrün, Messing und Pergament, dazu skalierbare Wappen-, Rüstungs-, Schwert- und Katana-Illustrationen (`ArmoryIllustration.tsx`). Diese Motive sind ausdrücklich gestalterische Konzepte, keine Produktfotos oder maßhaltigen Produktzeichnungen. Es gibt keine zusätzlichen Abhängigkeiten oder externen Bild-/Schriftdienste.
+
+Die alten Messeradressen, Varianten, Warenkörbe und die Demo-Kasse bleiben erhalten. Neue Ausrüstung muss erst mit echten Daten in einen entsprechend erweiterten Produktkatalog übernommen werden; Stahlklingen, Schaukampfprodukte und LARP-Polsterwaffen sind getrennte Einsatzbereiche.
+
+## Bestehendes Angebot
 
 - Kleine handgeschmiedete Messer (Shop mit Produktseiten, Varianten, Warenkorb, Demo-Kasse)
 - Schärfservice für unterschiedliche Messer, Schwerter nach individueller Prüfung (strukturierte Anfrage)
@@ -70,6 +88,7 @@ tsconfig.pages.json       TypeScript-Konfiguration nur für den Pages-Build (ohn
 src/
   app/                    Routen (Next.js App Router)
     page.tsx                Startseite
+    ruestkammer/            Neue Sortimentsübersicht und vier geplante Kollektionen
     messer/                 Shop-Übersicht und [slug]-Produktseiten
     warenkorb/, kasse/      Warenkorb und Demo-Kasse
     schaerfservice/, massarbeit/, werkstatt/, kontakt/
@@ -80,6 +99,7 @@ src/
       webhooks/payments/    Eingang für Zahlungsergebnisse (verifiziert, noch ohne Bestellspeicher)
     robots.ts, sitemap.ts, icon.svg
   content/                ← ALLE redaktionellen Daten, zentral editierbar
+    collections.ts          Geplante Rüstungen, Schwerter, LARP und japanische Klingen
     products.ts             Produkte, Preise (Cent), Varianten, Maße, Pflege, Verfügbarkeit
     shop.ts                 Versandpauschale, Währung
     materials.ts            Holz-/Lederauswahl (Texte + Farben der Darstellung)
@@ -119,7 +139,7 @@ Alles, was Besucher lesen, steht in `src/content/`. Komponenten enthalten keine 
 
 ## Bildwelt
 
-Es gibt keine Fotos. Alle Messer-, Leder- und Holzdarstellungen werden prozedural als SVG erzeugt (`src/components/art/`) und sind überall als **„Konzeptdarstellung“** gekennzeichnet. Sie zeigen die gewählte Variante (Holz, Leder) und stimmen in Länge und Proportion mit den Produktdaten überein, sind aber keine Abbildungen realer Messer. Werkstattbereiche zeigen bewusst nur Platzhalter („Platz für Werkstattfotos“), keine vorgetäuschten Aufnahmen.
+Es gibt keine Fotos. Die Messer-, Leder- und Holzdarstellungen werden prozedural als SVG erzeugt (`src/components/art/`) und sind überall als **„Konzeptdarstellung“** gekennzeichnet. Sie zeigen die gewählte Variante (Holz, Leder) und stimmen in Länge und Proportion mit den Produktdaten überein, sind aber keine Abbildungen realer Messer. Werkstattbereiche zeigen bewusst nur Platzhalter („Platz für Werkstattfotos“), keine vorgetäuschten Aufnahmen.
 
 ## Demo-Einschränkungen
 

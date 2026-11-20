@@ -25,7 +25,7 @@ export function ContactSection({ heading = "h2" }: { heading?: "h1" | "h2" }) {
             <li className="border-b border-bone/15">
               <Link href="/massarbeit#anfrage" className="group flex min-h-16 items-center justify-between gap-4 py-4 hover:text-copper">
                 <span>
-                  <span className="font-display block text-xl font-semibold">Griff oder Scheide anfragen</span>
+                  <span className="font-display block text-xl font-semibold">Individuelles Projekt anfragen</span>
                   <span className="text-sm text-fog">Ausgangsprodukt, Material, Stil, Budget</span>
                 </span>
                 <ArrowRightIcon size={20} className="shrink-0 transition-transform group-hover:translate-x-1" />

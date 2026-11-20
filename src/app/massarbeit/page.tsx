@@ -7,8 +7,8 @@ import { Caps } from "@/components/ui/Caps";
 import { customWork } from "@/content/pages";
 
 export const metadata: Metadata = {
-  title: "Maßarbeit: Griffe und Scheiden",
-  description: "Individuelle Griffe und Scheiden: Projektanfrage mit Ausgangsprodukt, Material, Stil, Budgetrahmen und Beschreibung.",
+  title: "Maßarbeit & Ausrüstungswünsche",
+  description: "Projektanfrage für Griffe, Scheiden und geplante Mittelalter-, LARP- oder Japan-Ausrüstung.",
 };
 
 export default function CustomWorkPage() {

@@ -1,3 +1,4 @@
+import { collections } from "./collections";
 import { products } from "./products";
 import { handleMaterialIds, leatherMaterialIds, materials } from "./materials";
 
@@ -27,6 +28,7 @@ export const sharpeningConditions = [
 ] as const satisfies readonly Choice[];
 
 export const customBaseProducts = [
+  ...collections.map((c) => ({ value: c.slug, label: `${c.name} (in Planung)` })),
   ...products.map((p) => ({ value: p.slug, label: `${p.name} (${p.type})` })),
   { value: "neues-messer", label: "Neues Messer nach meinen Vorstellungen" },
   { value: "eigenes-messer-griff", label: "Mein eigenes Messer: neuer Griff" },
@@ -35,6 +37,7 @@ export const customBaseProducts = [
 ] as const satisfies readonly Choice[];
 
 export const customScopes = [
+  { value: "ausruestung", label: "Ausrüstung / Sortimentswunsch" },
   { value: "griff", label: "Griff" },
   { value: "scheide", label: "Scheide" },
 ] as const satisfies readonly Choice[];
@@ -46,6 +49,9 @@ export const customMaterials = [
 ] as const satisfies readonly Choice[];
 
 export const customStyles = [
+  { value: "mittelalter", label: "Mittelalterlich / historisch inspiriert" },
+  { value: "fantasy", label: "Fantasy / Rollenspiel" },
+  { value: "japanisch", label: "Japanisch inspiriert" },
   { value: "schlicht", label: "Schlicht und funktional" },
   { value: "klassisch", label: "Klassisch" },
   { value: "rustikal", label: "Rustikal, Schmiedespuren sichtbar" },

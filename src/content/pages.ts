@@ -6,20 +6,20 @@ import type { FaqItem, ProcessStep } from "./types";
  */
 
 export const hero = {
-  eyebrow: "Schmiede · Schärfservice · Maßarbeit",
-  headline: ["Aus Feuer geformt.", "Für deinen Alltag gemacht."],
-  lead: "Kleine handgeschmiedete Messer, ein Schärfservice mit Augenmaß sowie Griffe und Scheiden nach deinen Vorstellungen. Jedes Stück entsteht einzeln, in der Werkstatt von Meisterschmied David.",
-  caption: "Konzeptdarstellung des Messers „Esse“ – Beispielprodukt, kein Foto.",
+  eyebrow: "Mittelalter · LARP · Japan",
+  headline: ["Für deine nächste", "Legende."],
+  lead: "Rüstungen, Schwerter und Ausrüstung für deine Welt. Von mittelalterlichen Märkten und LARP-Abenteuern bis zur Faszination japanischer Klingen.",
+  caption: "Wappenillustration · gestalterisches Konzept",
 };
 
 export const knivesSection = {
-  eyebrow: "01 · Messer",
-  title: "Drei Messer für den Anfang.",
+  eyebrow: "Aus der Werkstatt · Messer",
+  title: "Für Alltag & Lagerküche.",
   lead: "Klein im Programm, genau im Detail. Jedes Messer wird einzeln gefertigt. Preise und Maße sind in dieser Vorschau Beispieldaten.",
 };
 
 export const sharpening = {
-  eyebrow: "02 · Schärfservice",
+  eyebrow: "Werkstattservice · Schärfen",
   title: "Schärfe, die zum Messer passt.",
   lead: "Küchenmesser, Taschenmesser oder Outdoor-Klinge: Du beschreibst Messer und Zustand, ich prüfe, was sinnvoll ist. Erst danach geht etwas auf die Reise.",
   steps: [
@@ -52,29 +52,29 @@ export const sharpening = {
 };
 
 export const customWork = {
-  eyebrow: "03 · Maßarbeit",
-  title: "Dein Griff. Deine Scheide.",
-  lead: "Form, Holz, Leder und Details legst du mit mir fest. Ausgangspunkt kann eines der Messer sein, dein eigenes Messer oder ein neues nach deinen Vorstellungen.",
+  eyebrow: "Dein Einzelstück · Maßarbeit",
+  title: "Deine Idee. Dein Charakter.",
+  lead: "Ein Griff, eine Scheide oder eine Idee für deine Gewandung: Beschreib Stil und Einsatzzweck. Für Rüstungen, Schwerter, LARP und japanische Klingen klären wir zuerst, was im geplanten Sortiment möglich wird.",
   topics: [
     { title: "Griff", text: "Holzart, Form, Größe und Stifte. Passend zu deiner Hand und zu dem, was du damit tust." },
     { title: "Scheide", text: "Leder, Farbe, Tragart und Naht. Von der schlichten Scheide bis zum passenden Etui." },
-    { title: "Kombination", text: "Griff und Scheide aufeinander abgestimmt – oder beides einzeln, für ein Messer, das du schon hast." },
+    { title: "Ausrüstung", text: "Wünsche für Rüstung, Schwert, LARP oder japanische Klingen. Die Kollektionen sind in Planung; zuerst klären wir Möglichkeiten und Einsatzzweck." },
   ] satisfies ProcessStep[],
   steps: [
     { title: "Wunsch beschreiben", text: "Du füllst die Projektanfrage aus: Ausgangsprodukt, Material, Stil, Budgetrahmen und eine Beschreibung." },
     { title: "Abstimmen", text: "Wir besprechen Material, Form und Details. Ein Angebot gibt es erst danach." },
-    { title: "Anfertigen", text: "Ich fertige Griff und Scheide als Einzelstück. Wie lange das dauert, hängt vom Projekt ab." },
+    { title: "Anfertigen", text: "Bei bestätigten Griff- und Scheidenprojekten folgt die Anfertigung. Für die geplanten Kollektionen stehen Fertigung, Bezug und Termine noch nicht fest." },
   ] satisfies ProcessStep[],
   materialNote:
     "Materialauswahl als Beispiel. Was für dein Projekt möglich ist, klären wir in der Abstimmung. Die Darstellungen sind Konzeptillustrationen, keine Fotos.",
   pageLead:
-    "Ein Messer, das zu deiner Hand passt, sieht man und spürt man. Beschreib dein Projekt, dann klären wir gemeinsam, was möglich ist.",
+    "Vom individuellen Messergriff bis zur Idee für deine Rollenspiel-Ausrüstung: Beschreib deinen Charakter, dein Vorbild und den geplanten Einsatz. Die neuen Sortimente sind in Planung; eine Anfrage ist noch keine Fertigungszusage.",
 };
 
 export const workshop = {
-  eyebrow: "04 · Werkstatt",
+  eyebrow: "Die Werkstatt",
   title: "Handarbeit statt Stückzahl.",
-  lead: "Glut & Grat ist eine kleine Schmiede, die von einer Person betrieben wird. Hier entstehen wenige Dinge, dafür einzeln: Messer, Griffe, Scheiden und scharfe Klingen für andere.",
+  lead: "Glut & Grat ist eine kleine Schmiede, die von einer Person betrieben wird. Messer, Griffe, Scheiden und Schärfservice bilden den Anfang. Das nächste Kapitel führt zu Mittelalter, Rollenspiel und japanischen Klingen; die neuen Kollektionen sind in Planung.",
   person: {
     title: "Meisterschmied",
     name: "David",
@@ -111,6 +111,9 @@ export const workshop = {
 };
 
 export const faq: FaqItem[] = [
+  { question: "Wann kommen Rüstungen, Schwerter und Katana?", answer: "Diese Kollektionen sind in Planung. Modelle, Preise und Starttermine stehen noch nicht fest. Du kannst deine Wünsche über die Projektanfrage beschreiben; das ist keine Vorbestellung oder Reservierung." },
+  { question: "Sind alle Schwerter für LARP oder Schaukampf geeignet?", answer: "Nein. Polsterwaffen für LARP, stumpfe Schaukampfklingen und scharfe oder dekorative Stahlklingen sind unterschiedliche Produkte. Der Einsatzbereich wird später für jeden Artikel separat angegeben. Für Veranstaltungen gelten zusätzlich deren Regeln und Waffenchecks." },
+
   {
     question: "Wer steckt hinter Glut & Grat?",
     answer:
@@ -159,7 +162,7 @@ export const faq: FaqItem[] = [
 ];
 
 export const contactSection = {
-  eyebrow: "05 · Kontakt",
+  eyebrow: "Kontakt",
   title: "Noch eine Frage?",
   lead: "Schreib, was du wissen möchtest. Für einen Schärfauftrag oder ein individuelles Projekt sind die strukturierten Anfragen der bessere Weg.",
 };
@@ -224,3 +227,9 @@ export const legalPages: Record<"impressum" | "datenschutz" | "agb" | "widerruf"
     ],
   },
 };
+
+export const workshopServices = [
+  { id: "massarbeit", eyebrow: "Individuelle Projekte", title: "Deine Idee nimmt Form an.", text: "Griffe, Scheiden und Wünsche für deine Ausrüstung. Wir beginnen mit deinem Vorbild und dem geplanten Einsatz.", href: "/massarbeit#anfrage", action: "Projekt anfragen" },
+  { id: "schaerfservice", eyebrow: "Pflege & Schärfe", title: "Ein neuer Schliff.", text: "Schärfservice für Messer und, nach individueller Prüfung, Schwerter. Beschreib deine Klinge, bevor du etwas einsendest.", href: "/schaerfservice#anfrage", action: "Schärfservice anfragen" },
+  { id: "werkstatt", eyebrow: "Meisterschmied David", title: "Direkt aus der Werkstatt.", text: "Eine Person, ein Ansprechpartner. Erfahre mehr über David, die Materialien und die Arbeit hinter Glut & Grat.", href: "/werkstatt", action: "Werkstatt kennenlernen" },
+];

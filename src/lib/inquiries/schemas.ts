@@ -79,7 +79,7 @@ export const customWorkSchema = z.object({
   baseProduct: z.enum(values(customBaseProducts), { error: "Bitte wähle ein Ausgangsprodukt." }),
   scope: z
     .array(z.enum(values(customScopes)))
-    .min(1, "Bitte wähle, ob es um Griff, Scheide oder beides geht."),
+    .min(1, "Bitte wähle Griff, Scheide oder Ausrüstung / Sortimentswunsch."),
   materials: z
     .array(z.enum(values(customMaterials)))
     .min(1, "Bitte wähle mindestens ein Material oder „Beratung gewünscht“."),

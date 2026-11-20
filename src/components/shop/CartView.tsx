@@ -27,10 +27,10 @@ export function CartView() {
     return (
       <div className="wrap py-16 sm:py-24" data-testid="cart-empty">
         <p className="font-display text-3xl font-semibold sm:text-4xl">Dein Warenkorb ist leer.</p>
-        <p className="prose-copy mt-4 text-fog">Die Messer sind einzeln gefertigte Beispielprodukte. Schau dir eines in Ruhe an.</p>
+        <p className="prose-copy mt-4 text-fog">Entdecke die kommenden Kollektionen und die Messer im Demo-Shop.</p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href="/messer" size="lg">
-            Messer entdecken
+          <ButtonLink href="/ruestkammer" size="lg">
+            Rüstkammer entdecken
           </ButtonLink>
           <ButtonLink href="/schaerfservice#anfrage" variant="secondary" size="lg">
             Schärfservice anfragen
@@ -63,7 +63,7 @@ export function CartView() {
             ))}
           </ul>
           <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-            <Link href="/messer" className="inline-flex min-h-11 items-center text-[0.9375rem] underline underline-offset-4 hover:text-copper">
+            <Link href="/ruestkammer" className="inline-flex min-h-11 items-center text-[0.9375rem] underline underline-offset-4 hover:text-copper">
               Weitere Messer ansehen
             </Link>
             {confirmClear ? (

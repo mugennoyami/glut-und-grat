@@ -11,7 +11,7 @@ export function FaqSection() {
           <SectionHead
             id="faq-title"
             eyebrow="Fragen"
-            title="Kurz beantwortet."
+            title="Gut zu wissen."
             lead="Alles, was vor einer Anfrage oder Bestellung wichtig ist."
             tone="bone"
           />

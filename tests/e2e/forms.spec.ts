@@ -72,7 +72,7 @@ test.describe("Maßarbeit-Formular", () => {
     await page.goto("/massarbeit?produkt=esse");
     await expect(page.getByLabel(/Ausgangsprodukt/)).toHaveValue("esse");
     await page.getByRole("button", { name: "Projekt anfragen" }).click();
-    await expect(page.getByText("Bitte wähle, ob es um Griff, Scheide oder beides geht.").first()).toBeVisible();
+    await expect(page.getByText("Bitte wähle Griff, Scheide oder Ausrüstung / Sortimentswunsch.").first()).toBeVisible();
     await expect(page.getByText("Bitte wähle mindestens ein Material oder „Beratung gewünscht“.").first()).toBeVisible();
     await expect(page.getByText("Bitte wähle einen Stil.").first()).toBeVisible();
     await expect(page.getByText("Bitte wähle einen Budgetrahmen.").first()).toBeVisible();

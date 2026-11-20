@@ -21,7 +21,7 @@ test.describe("Statischer Export (GitHub Pages)", () => {
 
     await page.goto("./");
     await page.waitForLoadState("networkidle");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Aus Feuer geformt\.\s*Für deinen Alltag gemacht\./);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Für deine nächste\s*Legende\./);
     // Tailwind/CSS wurde geladen (warmes Schwarz als Hintergrund)
     expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(17, 15, 14)");
     // Schrift aus dem eigenen Export
@@ -38,8 +38,8 @@ test.describe("Statischer Export (GitHub Pages)", () => {
   test("Navigation und Direktaufruf von Unterseiten bleiben im Basis-Pfad", async ({ page, baseURL }) => {
     const base = new URL(baseURL!).pathname; // z. B. /glut-und-grat/
     await page.goto("./");
-    await page.getByRole("navigation", { name: "Hauptnavigation" }).getByRole("link", { name: "Messer", exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`${base}messer/$`));
+    await page.getByRole("navigation", { name: "Hauptnavigation" }).getByRole("link", { name: "Rüstkammer", exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`${base}ruestkammer/$`));
     await page.getByRole("link", { name: "Zunder ansehen" }).click();
     await expect(page).toHaveURL(new RegExp(`${base}messer/zunder/$`));
     await expect(page.getByRole("heading", { level: 1, name: "Zunder" })).toBeVisible();
@@ -128,3 +128,16 @@ test.describe("Statischer Export (GitHub Pages)", () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   });
 });
+
+for (const slug of ["ruestungen", "schwerter", "larp", "katana"]) {
+  test(`Kollektion ${slug} ist statisch erreichbar und behält den Anfragekontext`, async ({ page, baseURL }) => {
+    const response = await page.goto(`ruestkammer/${slug}/`);
+    expect(response?.status()).toBe(200);
+    await page.reload();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await page.getByRole("link", { name: "Interesse anfragen" }).click();
+    await expect(page).toHaveURL(url => url.pathname === `${new URL(baseURL!).pathname}massarbeit/`);
+    await expect(page.getByLabel(/Ausgangsprodukt/)).toHaveValue(slug);
+    await expect(page.getByRole("checkbox", { name: "Ausrüstung / Sortimentswunsch" })).toBeChecked();
+  });
+}

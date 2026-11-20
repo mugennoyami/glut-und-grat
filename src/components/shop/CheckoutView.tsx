@@ -113,7 +113,7 @@ export function CheckoutView() {
           <CartTotals summary={{ ...result.quote, freeShippingRemainingCents: null }} className="mt-4" />
         </div>
         <div className="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href="/messer">Zurück zu den Messern</ButtonLink>
+          <ButtonLink href="/ruestkammer">Zurück zu den Messern</ButtonLink>
           <Button variant="secondary" onClick={() => clear()}>
             Warenkorb leeren
           </Button>
@@ -128,7 +128,7 @@ export function CheckoutView() {
         <p className="font-display text-3xl font-semibold">Es liegt nichts im Warenkorb.</p>
         <p className="prose-copy mt-3 text-fog">Lege zuerst ein Messer in den Warenkorb, um die Demo-Kasse zu testen.</p>
         <div className="mt-6">
-          <ButtonLink href="/messer">Messer entdecken</ButtonLink>
+          <ButtonLink href="/ruestkammer">Rüstkammer entdecken</ButtonLink>
         </div>
       </div>
     );

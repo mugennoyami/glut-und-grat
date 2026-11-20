@@ -35,8 +35,8 @@ export function CartDrawer() {
             <p className="font-display text-2xl font-semibold">Dein Warenkorb ist leer.</p>
             <p className="mt-2 max-w-sm text-fog">Die Messer sind einzeln gefertigte Beispielprodukte. Schau dir eines in Ruhe an.</p>
             <div className="mt-6">
-              <Link href="/messer" className={buttonClass({ variant: "primary" })} onClick={closeDrawer}>
-                Messer entdecken
+              <Link href="/ruestkammer" className={buttonClass({ variant: "primary" })} onClick={closeDrawer}>
+                Rüstkammer entdecken
               </Link>
             </div>
           </div>

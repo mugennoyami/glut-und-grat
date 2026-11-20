@@ -11,7 +11,7 @@ import { Wordmark } from "@/components/ui/Wordmark";
 import { site } from "@/content/site";
 
 function isActive(pathname: string, href: string): boolean {
-  return pathname === href || pathname.startsWith(`${href}/`);
+  return pathname === href || (href !== "/ruestkammer" && pathname.startsWith(`${href}/`));
 }
 
 export function Header() {
@@ -27,7 +27,7 @@ export function Header() {
           <Wordmark />
         </Link>
 
-        <nav aria-label="Hauptnavigation" className="hidden md:block">
+        <nav aria-label="Hauptnavigation" className="hidden lg:block">
           <ul className="flex items-center gap-1 lg:gap-3">
             {site.nav.map((item) => {
               const active = isActive(pathname, item.href);
@@ -75,7 +75,7 @@ export function Header() {
             aria-haspopup="dialog"
             aria-controls="mobile-menu"
             aria-label="Menü öffnen"
-            className="grid h-11 w-11 place-items-center rounded-[3px] text-bone hover:text-copper md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-[3px] text-bone hover:text-copper lg:hidden"
           >
             <MenuIcon size={24} />
           </button>

@@ -11,7 +11,7 @@ export function Footer() {
           <Wordmark size="lg" />
           <p className="font-display mt-5 max-w-sm text-xl italic text-fog">{site.claim}</p>
           <p className="mt-6 max-w-sm text-sm text-fog">
-            Handgeschmiedete Messer, Schärfservice sowie individuelle Griffe und Scheiden. Die Werkstatt von {site.operator.title} {site.operator.name}.
+            Mittelalter, Rollenspiel und japanische Klingen. Rüstungen und Schwerter in Planung; Messer, Schärfservice und Maßarbeit aus der Schmiede. Die Werkstatt von {site.operator.title} {site.operator.name}.
           </p>
         </div>
 
@@ -25,6 +25,7 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li><Link href="/messer" className="inline-flex min-h-10 items-center hover:text-copper">Messer & Lagerküche</Link></li>
             <li>
               <Link href="/warenkorb" className="inline-flex min-h-10 items-center hover:text-copper">
                 Warenkorb

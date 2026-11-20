@@ -1,12 +1,10 @@
 @import "tailwindcss";
 
-/* ───────────── Designsystem „Glut & Grat“ ─────────────
-   Warmes Schwarz und Anthrazit, gebrochenes Weiß, sparsame Kupfer- und Glutakzente.
-   Kontraste (WCAG): bone auf coal ≈ 15:1, fog auf coal ≈ 7:1, copper auf coal ≈ 6:1,
-   ink auf bone ≈ 15:1, ink-soft auf bone ≈ 7:1, copper-deep auf bone ≈ 5:1. */
+/* Designsystem „Glut & Grat“: dunkler Stahl, Waldgrün, Pergament und Messing.
+   Dunkle und helle Flächen verwenden getrennte Akzentfarben für lesbare Kontraste. */
 @theme {
   --color-coal: #110f0e;
-  --color-forge: #191614;
+  --color-forge: #191e1a;
   --color-anthracite: #24201e;
   --color-ash: #38322f;
   --color-smoke: #5b534d;
@@ -15,10 +13,10 @@
   --color-paper: #e3dacb;
   --color-ink: #1a1613;
   --color-ink-soft: #4d443c;
-  --color-copper: #c6844c;
-  --color-copper-deep: #8c5025;
-  --color-ember: #ee6b2d;
-  --color-ember-soft: #f48f55;
+  --color-copper: #c9ae77;
+  --color-copper-deep: #775a2c;
+  --color-ember: #c9ae77;
+  --color-ember-soft: #e0c58d;
 
   --font-display: "Fraunces Variable", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -274,3 +272,32 @@ input[type="number"] {
     animation: dialog-in-left 0.32s var(--ease-forge);
   }
 }
+
+/* Rüstkammer: dunkler Stahl, Messing und heraldische Formen. */
+.armory-hero {
+  background: radial-gradient(ellipse at 78% 45%, #35413566, transparent 55%),
+    linear-gradient(120deg, #110f0e, #17211c 75%, #171c17);
+}
+.crest-arch {
+  border: 1px solid #c9ae7740;
+  border-radius: 48% 48% 2px 2px;
+  background: linear-gradient(180deg, #c9ae7705, #c9ae770a);
+  box-shadow: 0 0 0 12px #c9ae7705, inset 0 0 65px #00000035;
+}
+.crest-arch::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid #c9ae7720;
+  border-radius: inherit;
+}
+.armory-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid #c9ae7755;
+  color: var(--color-bone);
+  font-size: .875rem;
+}
+.armory-chip:hover { background: #c9ae7715; border-color: var(--color-copper); }

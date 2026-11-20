@@ -6,9 +6,9 @@
 
 export const site = {
   name: "Glut & Grat",
-  claim: "Schmiedekunst. Schärfe. Charakter.",
+  claim: "Stahl. Leder. Geschichten.",
   description:
-    "Glut & Grat ist die kleine Schmiede von Meisterschmied David: handgeschmiedete Messer, Schärfservice sowie individuelle Griffe und Scheiden.",
+    "Glut & Grat – die Rüstkammer für Mittelalter, LARP und Rollenspiel. Rüstungen, Schwerter und japanische Klingen in Planung; Messer, Schärfservice und individuelle Projekte aus der Werkstatt von David.",
   /** Betreiber der Werkstatt (eine Person). Nachname und weitere Angaben sind noch offen. */
   operator: { title: "Meisterschmied", name: "David" },
   url: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000",
@@ -22,7 +22,8 @@ export const site = {
   demo: true,
 
   nav: [
-    { label: "Messer", href: "/messer" },
+    { label: "Rüstkammer", href: "/ruestkammer" },
+    { label: "Katana & Japan", href: "/ruestkammer/katana" },
     { label: "Schärfservice", href: "/schaerfservice" },
     { label: "Maßarbeit", href: "/massarbeit" },
     { label: "Werkstatt", href: "/werkstatt" },
